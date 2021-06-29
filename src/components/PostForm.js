@@ -1,75 +1,82 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { addPost } from "../action";
+import { createComment } from "../action/index.js";
 
-class PostForm extends Component {
-  //Handle form event
-  onSubmitForm = (e) => {
-    // prevent default behaviour
+class PostForm extends React.Component {
+  // Initialize constructor and state
+  constructor(props) {
+    super(props);
+
+    this.state = { title: "", comment: "" };
+  }
+
+  //Title input handler
+  onTitleInput = (e) => {
     e.preventDefault();
 
-    //fetch input value
-    const title = this.inputTitle.value;
-    const post = this.inputPost.value;
+    this.setState({ title: e.target.value });
+  };
 
-    //create new object
-    const newPost = {
-      id: new Date(),
-      title,
-      post,
+  //Comment input handler
+  onCommentInput = (e) => {
+    e.preventDefault();
+
+    this.setState({ comment: e.target.value });
+  };
+
+  //Form submit handler
+  onSubmitForm = (e) => {
+    e.preventDefault();
+
+    //Create new comment object
+    const comment = {
+      title: this.state.title,
+      comment: this.state.comment,
       isEditing: false,
     };
 
-    //Dispatch and action creator
-    this.props.addPost(newPost);
+    //Call action creator
+    this.props.createComment(comment);
+
+    //Reset state
+    this.setState({ title: "" });
+    this.setState({ comment: "" });
   };
 
-  //Render component
   render() {
     return (
-      <section>
-        <h1>Create new post!</h1>
+      <form onSubmit={this.onSubmitForm}>
+        <section>
+          <h2>Create Comment</h2>
+        </section>
 
-        <form onSubmit={this.onSubmitForm}>
-          <section style={{ marginBottom: "15px" }}>
-            <label htmlFor="title">Title: </label>
-            <input
-              required
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Enter title"
-              ref={(input) => {
-                this.inputTitle = input;
-              }}
-            />
-          </section>
+        <section>
+          <label htmlFor="title">Title: </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            onChange={this.onTitleInput}
+            value={this.state.title}
+            required
+          />
+        </section>
 
-          <section style={{ marginBottom: "15px" }}>
-            <textarea
-              required
-              cols="28"
-              rows="5"
-              placeholder="Enter post"
-              ref={(input) => {
-                this.inputPost = input;
-              }}
-            />
-          </section>
+        <section>
+          <label htmlFor="comment">Comment: </label>
+          <textarea
+            cols="28"
+            rows="5"
+            onChange={this.onCommentInput}
+            value={this.state.comment}
+            required
+          ></textarea>
+        </section>
 
-          <button>Post</button>
-        </form>
-      </section>
+        <button>Create</button>
+      </form>
     );
   }
 }
 
-//Access redux state
-const mapStateToProps = (state) => {
-  return {
-    posts: state.posts,
-  };
-};
-
-//Connect mapstatetoprops, action creator, and component
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(null, { createComment })(PostForm);

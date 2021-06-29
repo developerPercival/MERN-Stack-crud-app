@@ -1,12 +1,15 @@
 import React from "react";
 import PostForm from "./PostForm";
-import AllPost from "./AllPost";
+import ListOfComments from "./ListOfComments";
 
 const App = () => {
   return (
     <section>
+      <h1>Application is running!</h1>
+
       <PostForm />
-      <AllPost />
+
+      <ListOfComments />
     </section>
   );
 };

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import { allReducers } from "./allReducers.js";
+import { reducers } from "./reducers";
 
+// Combine all reducers
 export default combineReducers({
-  posts: allReducers,
+  comments: reducers,
 });

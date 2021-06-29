@@ -1,41 +1,77 @@
 import {
-  ADD_POST,
-  DELETE_POST,
-  EDIT_POST,
-  UPDATE_POST,
+  CREATE_COMMENT,
+  GET_COMMENTS,
+  EDIT_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT,
 } from "../config/config.js";
+import connectServer from "../api/index.js";
 
-//Action for add post
-export const addPost = (input) => {
-  return {
-    type: ADD_POST,
-    payload: input,
+//Create new comment
+export const createComment =
+  ({ title, comment, isEditing }) =>
+  async (dispatch) => {
+    try {
+      // Post request
+      const response = await connectServer.post("/comment/post", {
+        title,
+        comment,
+        isEditing,
+      });
+
+      // Dispatch response
+      dispatch({ type: CREATE_COMMENT, payload: { data: response.data } });
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+//Fetch all comments
+export const readComments = () => async (dispatch) => {
+  try {
+    // Get request
+    const response = await connectServer.get("/comment/");
+
+    //Dispatch response
+    dispatch({ type: GET_COMMENTS, payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-//Action for delete post
-export const deletePost = (id) => {
-  return {
-    type: DELETE_POST,
-    payload: id,
-  };
-};
-
-//Action for edit post
+//Edit post
 export const editPost = (id) => {
   return {
-    type: EDIT_POST,
+    type: EDIT_COMMENT,
     payload: id,
   };
 };
 
-//Action for update post
-export const updatePost = (updatedData, id) => {
-  console.log(updatedData);
+//Udpate post
+export const updatePost = (id, title, comment) => async (dispatch) => {
+  try {
+    //Update request
+    const response = await connectServer.patch(`/comment/edit/${id}`, {
+      title: title,
+      comment: comment,
+    });
 
-  return {
-    type: UPDATE_POST,
-    payload: updatedData,
-    id: id,
-  };
+    //Dispatch response
+    dispatch({ type: UPDATE_COMMENT, payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//Delete comment
+export const deleteComment = (id) => async (dispatch) => {
+  try {
+    // Delete request
+    const response = await connectServer.delete(`/comment/delete/${id}`);
+
+    // Dispatch response
+    dispatch({ type: DELETE_COMMENT, payload: response.data._id });
+  } catch (err) {
+    console.log(err);
+  }
 };
