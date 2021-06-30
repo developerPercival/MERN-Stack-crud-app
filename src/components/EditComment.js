@@ -6,7 +6,10 @@ class EditComment extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { title: "", comment: "" };
+    this.state = {
+      title: this.props.comment.title,
+      comment: this.props.comment.comment,
+    };
   }
 
   // form submit handler
@@ -24,7 +27,10 @@ class EditComment extends React.Component {
   // Render component
   render() {
     return (
-      <form onSubmit={this.onFormSubmit}>
+      <form
+        onSubmit={this.onFormSubmit}
+        className="edit-background border-radius container-padding form-control"
+      >
         <section>
           <h2>Edit Comment</h2>
         </section>
@@ -36,7 +42,7 @@ class EditComment extends React.Component {
             id="title"
             name="title"
             required
-            defaultValue={this.props.comment.title}
+            value={this.state.title}
             onChange={(e) => {
               this.setState({ title: e.target.value });
             }}
@@ -49,14 +55,14 @@ class EditComment extends React.Component {
             cols="28"
             rows="5"
             required
-            defaultValue={this.props.comment.comment}
+            value={this.state.comment}
             onChange={(e) => {
               this.setState({ comment: e.target.value });
             }}
           ></textarea>
         </section>
 
-        <button>Edit</button>
+        <button className="edit-button">Edit</button>
       </form>
     );
   }

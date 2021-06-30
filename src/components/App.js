@@ -4,12 +4,13 @@ import ListOfComments from "./ListOfComments";
 
 const App = () => {
   return (
-    <section>
-      <h1>Application is running!</h1>
-
-      <PostForm />
-
-      <ListOfComments />
+    <section className="container">
+      <section className="main-content">
+        <section className="grid">
+          <PostForm />
+          <ListOfComments />
+        </section>
+      </section>
     </section>
   );
 };

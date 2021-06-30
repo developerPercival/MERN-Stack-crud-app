@@ -45,12 +45,15 @@ class PostForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmitForm}>
-        <section>
+      <form
+        onSubmit={this.onSubmitForm}
+        className="background-primary border-radius container-padding form-control"
+      >
+        <section className="form-heading">
           <h2>Create Comment</h2>
         </section>
 
-        <section>
+        <section className="form-input">
           <label htmlFor="title">Title: </label>
           <input
             type="text"
@@ -62,7 +65,7 @@ class PostForm extends React.Component {
           />
         </section>
 
-        <section>
+        <section className="form-input">
           <label htmlFor="comment">Comment: </label>
           <textarea
             cols="28"
@@ -73,7 +76,7 @@ class PostForm extends React.Component {
           ></textarea>
         </section>
 
-        <button>Create</button>
+        <button className="form-button">Create</button>
       </form>
     );
   }

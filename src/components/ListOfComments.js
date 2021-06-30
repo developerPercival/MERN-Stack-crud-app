@@ -19,25 +19,27 @@ class ListOfComments extends React.Component {
     }
 
     //Return a block JSX
-    return this.props.comments.map((comment) => {
-      // Check isEdting
-      return (
-        <section key={comment._id}>
-          {comment.isEditing ? (
-            <EditComment comment={comment} />
-          ) : (
-            <Comment comment={comment} />
-          )}
-        </section>
-      );
-    });
+    return this.props.comments
+      .map((comment) => {
+        // Check isEdting
+        return (
+          <section key={comment._id}>
+            {comment.isEditing ? (
+              <EditComment comment={comment} />
+            ) : (
+              <Comment comment={comment} />
+            )}
+          </section>
+        );
+      })
+      .reverse();
   };
 
   // Render Component
   render() {
     return (
-      <section>
-        <h1>List of Comments</h1>
+      <section className="background-primary border-radius container-padding list-container">
+        <h1 className="list-heading">List of Comments</h1>
 
         {this.renderComments()}
       </section>

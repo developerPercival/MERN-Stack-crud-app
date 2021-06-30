@@ -22,7 +22,7 @@ app.listen(4000, () => {
   mongoose
     .connect("mongodb://localhost:27017/react-crud-app", {
       useCreateIndex: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
